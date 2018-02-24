@@ -24,17 +24,16 @@ public class SubtreeOfAnotherTree {
 	 
 	 //preOrder + string
 	 public boolean isSubtree2(TreeNode s, TreeNode t) {
-		 String ss = preOrder(s, true);
-		 String ts = preOrder(t, true);
+		 String ss = preOrder(s);
+		 String ts = preOrder(t);
 		 return ss.contains(ts);
 	 }
 	 
-	 public String preOrder(TreeNode node, boolean left) {
+	 public String preOrder(TreeNode node) {
 		 if(node == null) {
-			 if(left) return "lnull";
-			 else return "rnull";
+			 return "null";
 		 }
-		 return "#" + node.val + preOrder(node.left, true) + preOrder(node.right, false);
+		 return "#" + node.val + preOrder(node.left) + preOrder(node.right);
 	 }
 
      
