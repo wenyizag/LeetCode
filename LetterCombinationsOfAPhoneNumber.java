@@ -30,4 +30,25 @@ public class LetterCombinationsOfAPhoneNumber {
 			  backTracking(prefix + curChar.charAt(i), digits, index+1, ans);
 		 }
 	 }
+	 
+	 //iteration
+	 public static List<String> letterCombinations2(String digits) {
+		 LinkedList<String> ans = new LinkedList<String>();
+		 if(digits.length() == 0) return ans;
+		 
+		 String[] map = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+		 ans.add("");
+		 for(int i = 0; i < digits.length(); i++) {
+			 String curChar = map[digits.charAt(i) - '0'];
+			 int size = ans.size();
+			 for(int j = 0; j < size; j++) {
+				 String prefix = ans.poll();
+				 for(int k = 0; k < curChar.length(); k++) {
+					 ans.add(prefix + curChar.charAt(k));
+				 }				 
+			 }			 
+		 }
+		 
+		 return ans;
+	 }
 }
