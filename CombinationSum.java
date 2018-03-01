@@ -12,24 +12,23 @@ import java.util.Set;
 public class CombinationSum {
 	
 	public static List<List<Integer>> combinationSum(int[] candidates, int target) {
-        ArrayList<List<Integer>> ans = new ArrayList<List<Integer>>();
-        if(candidates.length == 0) return ans;
+		ArrayList<List<Integer>> ans = new ArrayList<>();
+		if(candidates.length == 0) return ans;
         Arrays.sort(candidates);
-        backTracking(0, target, candidates, new ArrayList<Integer>(), ans);
-        return ans;
-    }
-	
-	public static void backTracking(int index, int target, int[] candidates, 
-			                 ArrayList<Integer> cur, ArrayList<List<Integer>> ans) {
+		backtracking(target, 0, candidates, new ArrayList<Integer>(), ans);
+		return ans;
+	}
+	public static void backtracking(int target, int start, int[] candidates,
+								  ArrayList<Integer> cur, ArrayList<List<Integer>> ans) {
 		if(target == 0) {
 			ans.add(new ArrayList<Integer>(cur));
-            return;
+			return;
 		}
-		for(int i = index; i < candidates.length && target >= candidates[i]; i++) {
-			//if(i > index && candidates[i] == candidates[i-1]) continue;
+		for(int i = start; i < candidates.length; i++) {
+            if(target < candidates[i]) break;
 			cur.add(candidates[i]);
-			backTracking(i, target-candidates[i], candidates, cur, ans);
-			cur.remove(cur.size()-1);			
+			backtracking(target - candidates[i], i, candidates, cur, ans);
+			cur.remove(cur.size() - 1);
 		}
 	}
 	 
