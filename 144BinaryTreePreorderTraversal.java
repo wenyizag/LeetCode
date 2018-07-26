@@ -8,6 +8,7 @@
         Stack<TreeNode> s = new Stack<>();
         s.push(root);
         
+        //这是三种(preorder, inorder, postorder)中最简单的一种，因为father的值在前，所以先pop就好
         while(!s.isEmpty()) {
             root = s.pop();
             ans.add(root.val);
