@@ -1,4 +1,5 @@
-    public List<Integer> topKFrequent(int[] nums, int k) {
+//solution 1. bucket sort    
+public List<Integer> topKFrequent(int[] nums, int k) {
         HashMap<Integer, Integer> map = new HashMap<>();
         HashMap<Integer, List<Integer>> bucket = new HashMap<>();
 
@@ -30,6 +31,28 @@
                 count = ans.size();
                 if(count >= k) break;
             }
+        }
+        return ans;
+    }
+
+//solution 2. priorituQueue
+    public List<Integer> topKFrequent(int[] nums, int k) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        PriorityQueue<Integer> q = new PriorityQueue(new Comparator<Integer>(){
+            public int compare(Integer a, Integer b){
+                return -(map.get(a) - map.get(b));
+            }
+        });
+        for(int cur : nums){
+            map.put(cur, map.getOrDefault(cur, 0) + 1);
+        }
+        for(int cur : map.keySet()){
+            q.add(cur);
+        }
+        List<Integer> ans = new ArrayList<>();
+        while(k > 0){
+            ans.add(q.poll());
+            k--;
         }
         return ans;
     }
