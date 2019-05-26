@@ -1,30 +1,27 @@
 //Solution 1
     // Using Recursion
-    int pos = 0;
+   int idx = 0;
     public String decodeString(String s) { 		
-    		String ans = "";
-    		String num = "";
-    		int i = pos;
-    		while(i < s.length()) {
-    			if(!Character.isDigit(s.charAt(i)) && 
-    			   s.charAt(i) != '[' && s.charAt(i) != ']') {
-    				ans += s.charAt(i++);
-    			}
-    			else if(Character.isDigit(s.charAt(i))) {
-				    num += s.charAt(i++);
-    			}else if(s.charAt(i) == '[') {
-    				pos = i+1;
-    				String tmp = decodeString(s);
-    				for(int n = Integer.valueOf(num); n > 0; n--)
-    					ans += tmp;
-    				i = pos;
-    				num = "";
-    			}else if(s.charAt(i) == ']') {
-    				pos = ++i;
-    				return ans;
-    			}
-    		}
-    		return ans;
+        String ans = "";
+        int time = 0;
+        while(idx < s.length()) {
+            char cur = s.charAt(idx);
+            idx++;
+            if(Character.isDigit(cur)) {
+                time = time*10 + cur-'0';
+            }else if(cur == '[') {
+                String tmp = decodeString(s);
+                while(time > 0) {
+                    ans += tmp;
+                    time--;
+                }
+            }else if(cur == ']') {
+                return ans;
+            }else {
+                ans += cur;
+            }
+        }
+        return ans;
     }
 
  //Solution 2
