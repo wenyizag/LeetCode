@@ -1,5 +1,5 @@
 class MyCalendar {
-
+//solution 1
     TreeMap<Integer, Integer> calendar;
     public MyCalendar() {
         calendar = new TreeMap<>();
@@ -16,5 +16,20 @@ class MyCalendar {
         calendar.put(start, end);
         return true;
         
+    }
+    
+      
+    //solution 2
+        List<int[]> books;
+    public MyCalendar() {
+        books = new ArrayList<int[]>();
+    }
+    
+    public boolean book(int start, int end) {
+        for(int[]cur : books) {
+            if(Math.max(start, cur[0]) < Math.min(end, cur[1])) return false;
+        }
+        books.add(new int[]{start, end});
+        return true;
     }
 }
