@@ -47,4 +47,37 @@ class Solution {
         }
         return dp[0][len-1];
     }
+ 
+    
+    //solution 3
+        public boolean checkValidString(String s) {
+        int leftParenthesis = 0, rightParenthesis = 0;
+        int star = 0;
+    
+        for(int i = 0; i < s.length(); i++) {
+            if(s.charAt(i) == '*') star++;
+            else if(s.charAt(i) == '(') {
+                leftParenthesis++;
+            }else {
+                if(leftParenthesis > 0) leftParenthesis--;
+                else if(star > 0) star--;
+                else return false;
+            }
+        }
+        if(leftParenthesis > star) return false;
+        // System.out.println("test");
+        star = 0;
+        for(int i = s.length()-1; i >= 0; i--) {
+            if(s.charAt(i) == '*') star++;
+            else if(s.charAt(i) == ')') {
+                rightParenthesis++;
+            }else {
+                if(rightParenthesis > 0) rightParenthesis--;
+                else if(star > 0) star--;
+                else return false;
+            }
+        }
+
+        return rightParenthesis <= star;
+    }
 }
