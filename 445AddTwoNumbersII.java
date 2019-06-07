@@ -29,3 +29,45 @@
     }
 
     //还有个recursion的解法，没有心思看了
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        int len1 = getLength(l1);
+        int len2 = getLength(l2);
+        ListNode head = helper(l1, len1, l2, len2);
+        if(head.val >= 10) {
+            ListNode newHead = new ListNode(1);
+            newHead.next = head;
+            head.val -= 10;
+            return newHead;
+        }
+        return head;
+    }
+    
+    public int getLength(ListNode list) {
+        if(list == null) return 0;
+        int len = 1;
+        while(list.next != null) {len++; list = list.next;}
+        return len;
+    }
+    
+    public ListNode helper(ListNode l1, int len1, ListNode l2, int len2) {
+        if(len1 == 1 && len2 == 1) {
+            return new ListNode(l1.val + l2.val);
+        }
+        ListNode cur = null, next = null;
+        if(len1 > len2) {
+            cur = l1;
+            next = helper(l1.next, len1-1, l2, len2);
+        }else if(len1 < len2) {
+            cur = l2;
+            next = helper(l1, len1, l2.next, len2-1);
+        }else {
+            cur = new ListNode(l1.val + l2.val);
+            next = helper(l1.next, len1-1, l2.next, len2-1);
+        }
+        cur.next = next;
+        if(next.val >= 10) {
+            cur.val += 1;
+            next.val -= 10;
+        }
+        return cur;
+    }
