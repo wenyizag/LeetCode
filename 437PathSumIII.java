@@ -36,6 +36,7 @@
             count += map.get(curSum - sum);
         }
         
+        //map.put当前sum必须在查询完 if(map.containsKey(curSum - sum))之后，否则错
         map.put(curSum, map.getOrDefault(curSum, 0) + 1);
         helper(root.left, sum, curSum, map);
         helper(root.right, sum, curSum, map);
