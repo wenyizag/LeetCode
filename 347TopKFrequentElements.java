@@ -29,10 +29,9 @@ class Solution {
 }
 
 //PriorityQueue
-class Solution {
     public List<Integer> topKFrequent(int[] nums, int k) {
         HashMap<Integer, Integer> map = new HashMap<>();
-        PriorityQueue<Integer> q = new PriorityQueue(new Comparator<Integer>(){
+        PriorityQueue<Integer> q = new PriorityQueue(k, new Comparator<Integer>(){
             public int compare(Integer a, Integer b) {
                 return map.get(a) - map.get(b);
             }
@@ -42,8 +41,12 @@ class Solution {
             map.put(num, map.getOrDefault(num, 0) + 1);
         
         for(int key : map.keySet()) {
-            q.add(key);
-            if(q.size() > k) q.poll();
+            if(q.size() < k) {
+                q.add(key);
+            }else if(map.get(q.peek()) < map.get(key)) {
+                q.poll();
+                q.add(key);
+            }
         }
         
         List<Integer> ans = new ArrayList<>();
@@ -53,4 +56,3 @@ class Solution {
         
         return ans;
     }
-}
