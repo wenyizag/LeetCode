@@ -1,12 +1,33 @@
+//solution 1
     public int lengthOfLongestSubstring(String s) {
-        Set<Character> set = new HashSet<>();
-        char[] ch = s.toCharArray();
-        int start=0, max=0;
-        for(int i = 0; i < ch.length; i++){
-            if(!set.add(ch[i]) && s.indexOf(ch[i], start) != i){
-                start = s.indexOf(ch[i], start)+1;
+        if(s == null || s.length() == 0) return 0;
+        int ans = 0;
+        HashMap<Character, Integer> map = new HashMap<>();
+        
+        int left = -1, maxLen = 0;
+        for(int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if(map.containsKey(c)) {
+                left = Math.max(left, map.get(c));
             }
-            max = Math.max(max, i-start+1);
+            maxLen = Math.max(maxLen, i-left);
+            map.put(c, i);
+        }
+        return maxLen;
+    }
+
+//solution 2, 用数组代替hashmap的精简版
+    public int lengthOfLongestSubstring(String s) {
+        int[] pre_position = new int[256];
+        Arrays.fill(pre_position, -1);
+        char[] c = s.toCharArray();
+        
+        int left = -1, max = 0;
+        for(int i = 0; i < c.length; i++) {
+            left = Math.max(left, pre_position[c[i]]);
+            max = Math.max(max, i - left);
+            // System.out.println("i " + i + " left " + left);
+            pre_position[c[i]] = i;
         }
         return max;
     }
