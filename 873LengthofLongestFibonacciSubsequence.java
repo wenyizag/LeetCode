@@ -13,7 +13,7 @@
                 //这一句过滤器很重要，遵循严格单调递增
                 if(pre >= A[i]) continue;
                 if(map.containsKey(pre)){
-                    dp[i][j] = dp[map.get(pre)][i] + 1;
+                    dp[i][j] = Math.max(dp[i][j], dp[map.get(pre)][i] + 1);
                     ans = Math.max(ans, dp[i][j]);
                 }
             }
