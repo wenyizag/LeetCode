@@ -32,6 +32,26 @@ public class PalindromeLinkedList {
 			node = next;			
 		}
 		return pre;
-	}return a==0 && b==0;
 	    }
 }
+
+//solution 2. stack
+    public boolean isPalindrome(ListNode head) {
+        if(head == null) return true;
+        ListNode fast = head, slow = head;
+        Stack<ListNode> s = new Stack<>();
+        while(fast != null && fast.next != null){
+            s.push(slow);
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        if(fast != null){
+            slow = slow.next;
+        }
+
+        while(slow != null){
+            if(s.pop().val != slow.val) return false;
+            slow = slow.next;
+        }
+        return true;
+    }
