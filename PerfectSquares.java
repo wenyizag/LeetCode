@@ -1,17 +1,12 @@
-	public static int numSquares(int n) {
-        int[] squares = new int[n+1];
-        Arrays.fill(squares, Integer.MAX_VALUE);
-        squares[0] = 0;
-        
-        //一个中规中矩的DP
-        for(int i = 1; i <= n; i++) {
-        		int min = Integer.MAX_VALUE;
-        		int j = 1;
-        		while(i - j*j >= 0) {
-        			min = Math.min(min, squares[i-j*j]+1);
-        			j++;
-        		}
-        		squares[i] = min;
+public static int numSquares(int n) {
+      int[] dp = new int[n+1];
+        dp[1] = 1;
+
+        for(int i = 2; i <= n; i++){
+            dp[i] = i;
+            for(int j = 1; j*j <= i; j++){
+                dp[i] = Math.min(dp[i], dp[i - j * j] + 1);
+            }
         }
-        return squares[n];
-    }
+        return dp[n];
+}
