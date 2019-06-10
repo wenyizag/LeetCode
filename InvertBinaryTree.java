@@ -10,12 +10,13 @@ import java.util.Stack;
 public class InvertBinaryTree {
 	
 	//recursion
-	public TreeNode invertTree(TreeNode root) {
+    public TreeNode invertTree(TreeNode root) {
         if(root == null) return null;
-        TreeNode left = invertTree(root.right);
-        TreeNode right = invertTree(root.left);
-        root.left = left;
-        root.right = right;
+        TreeNode tmp = root.left;
+        root.left = root.right;
+        root.right = tmp;
+        invertTree(root.left);
+        invertTree(root.right);
         return root;
     }
 	
