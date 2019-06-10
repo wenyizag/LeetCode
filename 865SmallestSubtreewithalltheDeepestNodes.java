@@ -25,24 +25,27 @@
 
 
         //这个思路是这样的，先是求出最大深度h，然后h带到结点node中
-    TreeNode ans;
     public TreeNode subtreeWithAllDeepest(TreeNode root) {
-        int h = height(root);
-        subtree(root, h);
+        int height = getHeight(root);
+        // System.out.println(height);
+        TreeNode ans = getSubtree(root, height);
         return ans;
     }
-    public int height(TreeNode node){
+    
+    public int getHeight(TreeNode node) {
         if(node == null) return 0;
-        return Math.max(height(node.left), height(node.right))+1;
+        return Math.max(getHeight(node.left), getHeight(node.right)) + 1;
     }
     
-    public boolean subtree(TreeNode node, int h){
-        //如果node的深度和h一样，那说明这是最深节点
-        if(node == null) return h == 0;
-        //如果node的左右两个节点都是含最深节点，那么更新ans
-        boolean left = subtree(node.left, h-1);
-        boolean right = subtree(node.right, h-1);
-        if(left && right) ans = node;
-        //但凡左右中含有一个最深的，那它也算含有最深的，两个都不含才返回false
-        return left || right;
+    public TreeNode getSubtree(TreeNode node, int height) {
+        if(node == null) return null;
+        if(height == 1) {
+            return node;
+        }
+        TreeNode left = getSubtree(node.left, height-1);
+        TreeNode right = getSubtree(node.right, height-1);
+        if(left == null && right == null) return null;
+        else if(left!=null && right!=null) return node;
+        else if(left != null) return left;
+        else return right;
     }
