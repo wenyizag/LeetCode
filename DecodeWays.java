@@ -3,19 +3,22 @@ package leetcode;
 import java.util.HashSet;
 import java.util.LinkedList;
 
-public class DecodeWays {
-	public static int numDecodings(String s) {
-		int n = s.length();
-		if(n==0) return 0;
-		int[] dp = new int[n+1];
-		dp[0] = 1;
-		dp[1] = (s.charAt(0) == '0') ? 0 : 1;
-		for(int i = 2; i <= n; i++) {
-			int n1 = Integer.valueOf(s.substring(i-2, i));
-			int n2 = Integer.valueOf(s.substring(i-1, i));
-			if(n2 >=1 && n2 <= 9) dp[i] += dp[i-1];
-			if(n1 >=10 && n1 <= 26) dp[i] += dp[i-2];
-		}
-		return dp[n];
-	}
-}
+    public int numDecodings(String s) {
+        if(s.length() == 0) return 0;
+        return dp(s, 0);
+    }
+    
+    HashMap<Integer, Integer> map = new HashMap<>();
+    public int dp(String s, int start){
+        if(start > s.length()-1) return 1;
+        if(s.charAt(start) == '0') return 0;
+        if(start == s.length()-1) return 1;
+        
+        if(map.containsKey(start)) return map.get(start);
+        
+        int sum = dp(s, start+1);
+        int two = (s.charAt(start)-'0')*10 + (s.charAt(start+1)-'0');
+        if(two <= 26) sum += dp(s, start+2);
+        map.put(start, sum);
+        return sum;
+    }
