@@ -15,24 +15,20 @@ public class ShortestUnsortedContinuousSubarray {
 	    }
 	 
 	 //two pass
-	   public static int findUnsortedSubarray2(int[] nums) {
-	        int start = 0, end = nums.length - 1;
-	        while( start < nums.length-1 && nums[start] <= nums[start+1]){
-	            start++;
-	        }
-	        if(start == nums.length-1) return 0;
-	        while(end >= 1 && nums[end-1] <= nums[end]){
-	            end--;
-	        }
-	        int min = Integer.MAX_VALUE, max = Integer.MIN_VALUE;
-	        for(int i = start; i <=end; i++){
-	            min = Math.min(min, nums[i]);
-	            max = Math.max(max, nums[i]);
-	        }
-	        
-	        while(end < nums.length && nums[end] < max) end++;
-	        while(start >= 0 && nums[start] > min) start--;
-	        
-	        return end-start-1;
-	  }
+    public int findUnsortedSubarray(int[] nums) {
+        int min = Integer.MAX_VALUE, max = Integer.MIN_VALUE;
+        
+       for(int i = 1; i < nums.length; i++){
+           if(nums[i] < nums[i-1]){
+               min = Math.min(min, nums[i]);
+               max = Math.max(max, nums[i-1]);
+           }
+       }
+        if(min == Integer.MAX_VALUE) return 0;
+        int left = 0, right = nums.length-1;
+        while(nums[left] <= min) left++;
+        while(nums[right] >= max) right--;
+        
+        return right-left+1;
+    }
 }
